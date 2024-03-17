@@ -6,18 +6,17 @@ document.getElementById('addAssignmentForm').addEventListener('submit', function
 
     const assignmentName = document.getElementById('assignmentName').value;
     const dueDate = document.getElementById('dueDate').value;
+    const id = new Date().getTime(); // Using timestamp as a unique ID
 
     let assignments = JSON.parse(localStorage.getItem('assignments')) || [];
-    assignments.push({ name: assignmentName, due: dueDate, status: 'Pending' });
+    assignments.push({ id, name: assignmentName, due: dueDate, status: 'Pending' });
 
     localStorage.setItem('assignments', JSON.stringify(assignments));
-
-    // Update the Teacher's table with the new assignment
-    addAssignmentToTable({ name: assignmentName, due: dueDate, status: 'Pending' });
+    addAssignmentToTable({ id, name: assignmentName, due: dueDate, status: 'Pending' });
 
     // Reset the form
-    this.reset();
 });
+
 
 function addAssignmentToTable(assignment) {
     const table = document.getElementById('assignments');
@@ -25,8 +24,30 @@ function addAssignmentToTable(assignment) {
     row.insertCell(0).textContent = assignment.name;
     row.insertCell(1).textContent = assignment.status;
     row.insertCell(2).textContent = assignment.due;
-    // Add more cells/actions as needed
+
+    const deleteCell = row.insertCell(3);
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.onclick = function() { deleteAssignment(assignment.id); };
+    deleteCell.appendChild(deleteButton);
 }
+
+function deleteAssignment(assignmentId) {
+    let assignments = JSON.parse(localStorage.getItem('assignments')) || [];
+    assignments = assignments.filter(assignment => assignment.id !== assignmentId);
+
+    localStorage.setItem('assignments', JSON.stringify(assignments));
+    refreshAssignmentsTable();
+}
+
+function refreshAssignmentsTable() {
+    const table = document.getElementById('assignments');
+    table.innerHTML = ''; // Clear the table
+    const assignments = JSON.parse(localStorage.getItem('assignments')) || [];
+    assignments.forEach(addAssignmentToTable);
+}
+
+
 
 
 
