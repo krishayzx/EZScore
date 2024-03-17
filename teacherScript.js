@@ -18,6 +18,17 @@ document.getElementById('addAssignmentForm').addEventListener('submit', function
 });
 
 
+document.addEventListener('DOMContentLoaded', function() {
+    loadAssignments();
+});
+
+function loadAssignments() {
+    const assignments = JSON.parse(localStorage.getItem('assignments')) || [];
+    const assignmentsTable = document.getElementById('assignments');
+    assignmentsTable.innerHTML = ''; // Clear any existing content
+    assignments.forEach(assignment => addAssignmentToTable(assignment));
+}
+
 function addAssignmentToTable(assignment) {
     const table = document.getElementById('assignments');
     const row = table.insertRow();
@@ -25,29 +36,30 @@ function addAssignmentToTable(assignment) {
     row.insertCell(1).textContent = assignment.status;
     row.insertCell(2).textContent = assignment.due;
 
-    const deleteCell = row.insertCell(3);
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
-    deleteButton.onclick = function() { deleteAssignment(assignment.id); };
-    deleteCell.appendChild(deleteButton);
+    // Adding the Delete Button
+    const actionCell = row.insertCell(3);
+    const deleteButton = createActionButton('Delete', 'red', function() {
+        deleteAssignment(assignment.id);
+    });
+    actionCell.appendChild(deleteButton);
+
+    // Adding the Grade Button
+    const gradeButton = createActionButton('Grade', 'green', function() {
+        // Placeholder for grading functionality
+        console.log('Grade button clicked for assignment ID:', assignment.id);
+    });
+    actionCell.appendChild(gradeButton);
 }
 
-function deleteAssignment(assignmentId) {
-    let assignments = JSON.parse(localStorage.getItem('assignments')) || [];
-    assignments = assignments.filter(assignment => assignment.id !== assignmentId);
-
-    localStorage.setItem('assignments', JSON.stringify(assignments));
-    refreshAssignmentsTable();
+function createActionButton(text, color, onClickFunction) {
+    const button = document.createElement('button');
+    button.textContent = text;
+    button.style.backgroundColor = color;
+    button.onclick = onClickFunction;
+    return button;
 }
 
-function refreshAssignmentsTable() {
-    const table = document.getElementById('assignments');
-    table.innerHTML = ''; // Clear the table
-    const assignments = JSON.parse(localStorage.getItem('assignments')) || [];
-    assignments.forEach(addAssignmentToTable);
-}
-
-
+// ... rest of your functions (deleteAssignment, etc.) ...
 
 
 
@@ -102,3 +114,16 @@ document.getElementById('addAssignmentForm').addEventListener('submit', function
 
     closeAddAssignmentPopup();
 });
+function createActionButton(text, onClickFunction) {
+    const button = document.createElement('button');
+    button.textContent = text;
+    button.onclick = onClickFunction;
+
+    if (text === 'Grade') {
+        button.classList.add('button-grade');
+    } else if (text === 'Delete') {
+        button.classList.add('button-delete');
+    }
+
+    return button;
+}

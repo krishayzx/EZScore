@@ -126,3 +126,14 @@ tr:hover {
         margin-top: 10px;
     }
 }
+.button-delete {
+    background-color: red;
+    /* other styles */
+}
+
+.button-grade {
+    background-color: green;
+    color: white;
+    /* Other styling properties */
+}
+
