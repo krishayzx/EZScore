@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard - EZ Score</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module"> </script>
+</head>
+<body>
+    <div class="header">
+        <div class="course-info">
+            <h1>EZ Score</h1>
+            <span>CIS 22A | Spring 2024</span>
+        </div>
+        <div class="user-role">
+            <select id="roleSelect" onchange="handleRoleChange(this.value)">
+                <option value="student.html">Student</option>
+                <option value="teacher.html" selected>Teacher</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Due (EDT)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="assignments">
+                <!-- Rows will be populated by JavaScript -->
+            </tbody>
+        </table>
+        <div class="add-assignment-container">
+            <button id="addAssignmentBtn">+ Add Assignment</button>
+        </div>
+    </div>
+    <!-- Add Assignment Popup -->
+<div id="addAssignmentPopup" class="popup" style="display: none;">
+    <h2>Add Assignment</h2>
+    <form id="addAssignmentForm">
+        <label for="assignmentName">Assignment Name:</label>
+        <input type="text" id="assignmentName" name="assignmentName" required><br>
+        <label for="dueDate">Due Date:</label>
+        <input type="date" id="dueDate" name="dueDate" required><br>
+        <button type="submit">Submit</button>
+        <button type="button" onclick="closeAddAssignmentPopup()">Cancel</button>
+    </form>
+</div>
+
+    <!-- Rubric Upload Popup -->
+    <div id="rubricUploadPopup" class="popup" style="display: none;">
+        <h2>Upload Rubric</h2>
+        <!-- Form content for uploading rubric -->
+    </div>
+
+    <script src="teacherScript.js"></script>
+</body>
+</html>
+

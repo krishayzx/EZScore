@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - EZ Score</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module">  </script>
+</head>
+<body>
+    <div class="header">
+        <div class="course-info">
+            <h1>EZ Score</h1>
+            <span>CIS 22A | Spring 2024</span>
+        </div>
+        <div class="user-role">
+            <select id="roleSelect" onchange="location = this.value;">
+                <option value="student.html">Student</option>
+                <option value="teacher.html">Teacher</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Due (EDT)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="assignments">
+                <!-- Rows will be populated by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+    <div id="pdfAttachmentPopup" class="popup" style="display: none;">
+        <h2>Attach PDF</h2>
+        <img src="pdf-logo.jpeg" alt="Upload PDF" style="width: 50px; height: auto;">
+        <form id="pdfUploadForm">
+            <input type="file" id="pdfInput" accept=".pdf">
+            <button type="submit">Upload</button>
+            <button type="button" onclick="closePdfPopup()">Cancel</button>
+        </form>
+    </div>
+
+    <script src="studentScript.js"></script>
+</body>
+</html>
+    <script src="studentScript.js"></script>
+</body>
+</html>
+<div id="pdfAttachmentPopup" class="popup" style="display: none;">
+    <h2>Attach PDF</h2>
+    <form id="pdfUploadForm">
+        <input type="file" id="pdfInput" accept=".pdf">
+        <button type="submit">Upload</button>
+        <button type="button" onclick="closePdfPopup()">Cancel</button>
+    </form>
+</div>
